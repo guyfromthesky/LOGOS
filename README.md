@@ -88,9 +88,7 @@ For Fintech, Banking, or Reward Systems, LOGOS serves as a **"Cloud-Native Smart
 Game logic (like Tower Defense or RPG backends) is essentially a giant State Machine.
 * **The Fit:** Instead of writing thousands of nested `if/else` statements, LOGOS allows you to model game states as a Graph. Balancing the game becomes as simple as adjusting parameters in the Database, without recompiling the entire engine.
 
-### ❌ What LOGOS is NOT for
-* **Web Frontend / UI:** Do not use LOGOS to build websites or handle user interface events (Stick to React/JS for that).
-* **Simple Scripting:** Overkill for "Hello World" or simple data scraping.
+---
   
 ## 🗺️ Roadmap
 
@@ -108,7 +106,7 @@ Game logic (like Tower Defense or RPG backends) is essentially a giant State Mac
 * [ ] **Ledger System:** Implement Cryptographic Hashing and Locking mechanisms.
 * [ ] **Migration Protocol:** The "Key" system for human intervention in Locked Nodes.
 
----
+c
 
 ## ⚖️ License
 
