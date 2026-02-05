@@ -67,6 +67,31 @@ The system is defined by three core tables:
 
 ---
 
+## 🎯 Target Applications
+
+LOGOS is not a general-purpose language. It is a specialized tool for **High-Assurance Logic**. It shines in scenarios where correctness, security, and traceability are non-negotiable.
+
+### ✅ 1. AI Agent Orchestration (Primary)
+Current AI agent workflows are often "spaghetti code" of Python scripts and fragile API calls.
+* **The LOGOS Solution:** LOGOS acts as the strict "spinal cord" for AI Swarms. It forces Agents to operate within a visual, deterministic graph.
+* **Benefit:** Zero ambiguity in agent coordination. If an agent fails, the graph handles the retry/fallback logic, not a `try/catch` block hidden in code.
+
+### ✅ 2. Self-Evolving Systems (AI Building AI)
+Because LOGOS source code is just rows in a Database, a "Mother Agent" can spawn "Child Agents" simply by executing SQL `INSERT` commands.
+* **The Killer Feature:** The **WASM Sandbox** ensures that even if a Child Agent generates "bad" or "malicious" logic, it cannot crash the host system or access the file system. It is the safest environment for Meta-Learning.
+
+### ✅ 3. "Audit-Proof" Transactional Logic
+For Fintech, Banking, or Reward Systems, LOGOS serves as a **"Cloud-Native Smart Contract"**.
+* **The Advantage:** With its **Immutable Ledger** and **Cryptographic Hashing**, you can mathematically prove to auditors that a specific piece of business logic (e.g., "Tax Calculation Node v1.0") has not been altered since deployment. It offers the trust of Blockchain with the speed of Cloud Computing.
+
+### ✅ 4. Complex State Machines (Game Backends)
+Game logic (like Tower Defense or RPG backends) is essentially a giant State Machine.
+* **The Fit:** Instead of writing thousands of nested `if/else` statements, LOGOS allows you to model game states as a Graph. Balancing the game becomes as simple as adjusting parameters in the Database, without recompiling the entire engine.
+
+### ❌ What LOGOS is NOT for
+* **Web Frontend / UI:** Do not use LOGOS to build websites or handle user interface events (Stick to React/JS for that).
+* **Simple Scripting:** Overkill for "Hello World" or simple data scraping.
+  
 ## 🗺️ Roadmap
 
 ### Phase 1: The Foundation 🧱
