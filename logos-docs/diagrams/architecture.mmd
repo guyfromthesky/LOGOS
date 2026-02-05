@@ -1,0 +1,10 @@
+flowchart LR
+    A[Node A<br/>Rust → WASM<br/>Hash-ID]
+    B[Node B<br/>Rust → WASM<br/>Hash-ID]
+    E[Typed Edge<br/>u32 → bool]
+    L[Ledger<br/>Append-only<br/>Merkle Integrity]
+
+    A -->|Typed Output| E -->|Typed Input| B
+    L -.records.-> A
+    L -.records.-> B
+    L -.records.-> E
