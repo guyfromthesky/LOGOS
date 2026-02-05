@@ -120,7 +120,7 @@ LOGOS is designed to prevent "Cloud Capture".
 
 ## ⚠️ Disclaimer
 
-**Project LOGOS** is a **Critical Tech Experiment**.
+**Project LOGOS** is a **Personal Tech Experiment**.
 It prioritizes **Correctness**, **Security**, and **Performance** over Developer Experience (DX). It is built for a future where AI writes the code, and Humans architect the system.
 
 *Maintained by Evans.*
