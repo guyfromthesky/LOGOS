@@ -123,4 +123,4 @@ LOGOS is designed to prevent "Cloud Capture".
 **Project LOGOS** is a **Critical Tech Experiment**.
 It prioritizes **Correctness**, **Security**, and **Performance** over Developer Experience (DX). It is built for a future where AI writes the code, and Humans architect the system.
 
-*Maintained by a Solo Critical Tech Founder.*
+*Maintained by Evans.*
