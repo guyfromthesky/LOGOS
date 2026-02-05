@@ -1,115 +1,103 @@
-# LOGOS: The AI-Native Programming Protocol
+# LOGOS: The AI-Native Orchestration Protocol
 
 ![Status](https://img.shields.io/badge/Status-Research_Prototype-blueviolet)
 ![License](https://img.shields.io/badge/License-AGPLv3-red)
-![Core](https://img.shields.io/badge/Core-Rust-orange)
-![Target](https://img.shields.io/badge/Target-WebAssembly-blue)
+![Core](https://img.shields.io/badge/Orchestrator-Logos_Graph-blue)
+![Payload](https://img.shields.io/badge/Worker-Rust_%2B_WASM-orange)
 
-> **"Code is not text. Code is Data."**
+> **"Don't reinvent the wheel. Reinvent the assembly line."**
 
 ## 📖 Introduction
 
-**LOGOS** is an experimental, high-performance programming protocol designed specifically for **AI Agents** and **Cloud Services**.
+**LOGOS** is not a traditional programming language. It is a **High-Performance Orchestration Protocol** designed to manage the lifecycle of AI-generated code.
 
-Current programming languages (Python, JS, C++) are designed for human readability, relying on "syntax sugar" that creates ambiguity and bloat for AI models. LOGOS rejects this legacy. It treats source code not as text files, but as a **strict, immutable graph structure stored in a database**.
+Instead of writing a new language from scratch, LOGOS acts as a strict **Graph-based Supervisor** that orchestrates atomic units of logic written in **Rust**.
 
-**The Goal:** To create a "Zero-Hallucination" environment where AI constructs logic through verified database transactions, resulting in ultra-fast, secure WebAssembly (WASM) binaries.
+**The Philosophy:**
+1.  **Logos (The Brain):** Manages *Data Flow*, *Permissions*, and *Architecture* via a strict Database Graph.
+2.  **Rust (The Muscle):** Handles *Computation* and *Logic* via constrained, sandboxed WASM payloads.
 
----
-
-## 📐 Core Philosophy
-
-### 1. Strictness Over Simplicity
-We do not care about human readability. We care about **Machine Verifiability**.
-* **No Parsing:** AI does not generate text code (avoiding syntax errors).
-* **No Ambiguity:** AI generates structured data (Nodes/Edges) verified by database constraints.
-
-### 2. The "Bedrock" & "Sediment" Model (Intrinsic Immutability)
-* **Bedrock (Immutable):** Core logic blocks are cryptographically hashed. AI agents can *call* them but cannot *modify* them without a strict "Migration Token" from a human supervisor.
-* **Sediment (Mutable):** The sandbox layer where AI can experiment and build new features.
-
-### 3. Cloud-Native Performance
-* **Actor Model:** Logic is composed of independent Actors communicating via messages (optimized for distributed systems).
-* **WASM Target:** Compiles directly to WebAssembly for near-native speed, instant cold-starts, and perfect sandboxing.
+This hybrid approach leverages the massive ecosystem and safety of Rust while enforcing the "Immutable Bedrock" principles required for secure, autonomous AI Agents on the Cloud.
 
 ---
 
-## 🏗️ Technical Architecture: "Language as a Database"
+## 🏗️ Architecture: "The Factory Model"
 
-In LOGOS, there are no source files (`.rs`, `.py`). The "Source Code" is a relational graph stored in **SQLite** (local) or **EdgeDB** (cloud).
+In LOGOS, source code is not text files stored in folders. It is structured data stored in a **Relational Database** (SQLite/EdgeDB).
 
-### The Holy Trinity Schema
+### 1. The Structure (Schema)
 
-#### 1. Table `NODES` (The Logic Units)
-Represents atomic functions or control flow states.
-```sql
-CREATE TABLE nodes (
-    id          UUID PRIMARY KEY,
-    type        ENUM('PURE_FUNC', 'CONTROL_FLOW', 'STATE_ACCESS'),
-    payload     BLOB, -- WASM snippet or configuration
-    hash        STRING, -- SHA-256 of content (for immutability)
-    permission  ENUM('LOCKED', 'OPEN') -- The "Bedrock" lock
-);
-2. Table EDGES (The Data Flow)
-Represents the strict flow of data between nodes.
+The system is defined by three core tables:
 
-SQL
+* **`NODES` (The Workers):**
+    * Contains the **Rust Payload** (The actual logic).
+    * **Constraint:** Logic is compiled to WebAssembly (WASI) to ensure perfect sandboxing (no unauthorized file/network access).
+    * **Immutability:** Each node is identified by the SHA-256 hash of its compiled WASM binary.
+* **`EDGES` (The Assembly Line):**
+    * Defines strict data flow between Nodes.
+    * **Type Safety:** Enforces strict contract matching (e.g., Node A outputs `u32`, Node B must accept `u32`).
+* **`LEDGER` (The Security Guard):**
+    * Tracks ownership and permission.
+    * **Bedrock Blocks:** Core nodes are `LOCKED`. AI Agents can *link* to them but cannot *modify* their internal Rust code without a human-issued Migration Token.
 
-CREATE TABLE edges (
-    from_node   UUID,
-    to_node     UUID,
-    contract    STRING, -- e.g., "Int -> String". Compiler rejects type mismatches.
-    FOREIGN KEY(from_node) REFERENCES nodes(id)
-);
-3. Table LEDGER (The Audit Trail)
-A cryptographic log of who (Human or specific Agent ID) modified what. This creates a "Data Moat" around the system's evolution.
+### 2. The Workflow
 
-🔄 The Workflow
-Instruction: Human provides a prompt to the AI Agent.
+1.  **Prompt:** Human asks AI: *"Create a node to hash passwords."*
+2.  **Generation:** AI (guided by `skill.md`) generates a pure **Rust Function**:
+    ```rust
+    // AI generated payload
+    use sha2::{Sha256, Digest};
+    pub fn execute(input: String) -> String { ... }
+    ```
+3.  **Ingestion:** AI inserts this code into the `NODES` table.
+4.  **Compilation:** The LOGOS Supervisor wraps the code, compiles it to **WASM** using `rustc`, and verifies safety.
+5.  **Orchestration:** The Node is now an immutable block available for the Graph.
 
-Guidance (skill.md): The Agent uses a specialized skill set (SQL/API instructions) to manipulate the LOGOS Database.
+---
 
-Construction: The Agent executes transactions to insert Nodes and link Edges.
+## 🚀 Why This Architecture?
 
-Verification: The LOGOS Compiler (Rust) queries the DB, checks for cycles, type safety, and permission violations.
+| Feature | Old Way (Python/Scripts) | LOGOS Way (Rust + Graph) |
+| :--- | :--- | :--- |
+| **Performance** | Slow, Interpreter overhead | **Near-Native** (WASM JIT) |
+| **Safety** | Runtime Errors, Hallucinations | **Compile-Time Checks** (Rustc + Graph Validation) |
+| **Security** | Arbitrary Code Execution risk | **Sandboxed** (WASM Capabilities) |
+| **Maintenance** | "Spaghetti Code" | **Visual State Diagrams** |
+| **Ecosystem** | Dependency Hell | Access to full **crates.io** ecosystem |
 
-Compilation: If verified, the Graph is lowered to LLVM IR and emitted as a .wasm binary.
+---
 
-Visualization: The system renders a State Diagram (Mermaid/Graphviz) for human review.
+## 🗺️ Roadmap
 
-🗺️ Roadmap
-Phase 1: The Skeleton 💀
-[ ] Define strict Database Schema (SQLite).
+### Phase 1: The Foundation 🧱
+* [ ] Define the SQLite Schema for Nodes/Edges.
+* [ ] Build the **"Rust Wrapper"**: A tool to inject AI-generated snippets into a valid Rust crate template.
+* [ ] Implement the **Visualizer**: Render the Database Graph to Mermaid.js.
 
-[ ] Build the "Visualizer": A tool to render DB Graph to Mermaid.js.
+### Phase 2: The Pipeline ⚙️
+* [ ] **Compiler Service:** Automate `rustc` builds -> WASM within the pipeline.
+* [ ] **Runtime:** A lightweight Rust runner to load and execute the WASM Graph.
+* [ ] **Skill.md v1:** Train AI to generate valid Rust snippets and SQL insert commands.
 
-[ ] Develop skill.md v1.0 for ChatGPT to generate valid SQL logic.
+### Phase 3: The Fortress 🛡️
+* [ ] **Ledger System:** Implement Cryptographic Hashing and Locking mechanisms.
+* [ ] **Migration Protocol:** The "Key" system for human intervention in Locked Nodes.
 
-Phase 2: The Enforcer 🛡️
-[ ] Build Logos Runtime in Rust (Interpreter mode).
+---
 
-[ ] Implement Core Nodes (Math, String Ops).
+## ⚖️ License
 
-[ ] End-to-end test: Prompt -> DB -> Execution.
+**GNU Affero General Public License v3.0 (AGPL-3.0)**
 
-Phase 3: The Fortress 🏰
-[ ] Integrate LLVM backend (Rust inkwell) for WASM generation.
+LOGOS is designed to prevent "Cloud Capture".
 
-[ ] Implement Cryptographic Hashing for Node Immutability.
+> **The SaaS Loophole Closer:** If you use LOGOS to provide a service over a network (SaaS/Cloud), you **MUST** release the full source code (including your modifications and specific Rust payloads) to the users of that service.
 
-[ ] Implement the "Bedrock" locking mechanism.
+---
 
-Phase 4: The Loop ♾️
-[ ] Meta-Programming: Allow LOGOS Nodes to query/modify the LOGOS Database.
+## ⚠️ Disclaimer
 
-[ ] Self-Optimizing Agents: AI Architect agents that refactor the graph for efficiency.
+**Project LOGOS** is a **Critical Tech Experiment**.
+It prioritizes **Correctness**, **Security**, and **Performance** over Developer Experience (DX). It is built for a future where AI writes the code, and Humans architect the system.
 
-⚖️ License
-GNU Affero General Public License v3.0 (AGPL-3.0)
-
-LOGOS is open-source software. However, to prevent "Cloud Capture" (where corporations modify the core to sell as a closed SaaS without contributing back), we strictly enforce AGPLv3.
-
-Network Interaction Clause: If you run a modified version of LOGOS as a network service (SaaS/Cloud), you MUST make your modified source code available to the users of that service.
-
-⚠️ Disclaimer
-This is a Personal Research Project focused on High-Performance Computing and AI Architecture. It is experimental, highly complex, and follows a "Zero-Maintenance" principle. It is not intended for general-purpose scripting or UI development.
+*Maintained by a Solo Critical Tech Founder.*
