@@ -50,66 +50,63 @@ CREATE TABLE nodes (
     hash        STRING, -- SHA-256 of content (for immutability)
     permission  ENUM('LOCKED', 'OPEN') -- The "Bedrock" lock
 );
-2. Table EDGES (The Data Flow)
+```
+
+#### 2. Table `EDGES` (The Data Flow)
 Represents the strict flow of data between nodes.
 
-SQL
-
+```sql
 CREATE TABLE edges (
     from_node   UUID,
     to_node     UUID,
     contract    STRING, -- e.g., "Int -> String". Compiler rejects type mismatches.
     FOREIGN KEY(from_node) REFERENCES nodes(id)
 );
-3. Table LEDGER (The Audit Trail)
+```
+
+#### 3. Table `LEDGER` (The Audit Trail)
 A cryptographic log of who (Human or specific Agent ID) modified what. This creates a "Data Moat" around the system's evolution.
 
-🔄 The Workflow
-Instruction: Human provides a prompt to the AI Agent.
+## 🔄 The Workflow
+**Instruction:** Human provides a prompt to the AI Agent.
 
-Guidance (skill.md): The Agent uses a specialized skill set (SQL/API instructions) to manipulate the LOGOS Database.
+**Guidance (skill.md):** The Agent uses a specialized skill set (SQL/API instructions) to manipulate the LOGOS Database.
 
-Construction: The Agent executes transactions to insert Nodes and link Edges.
+**Construction:** The Agent executes transactions to insert Nodes and link Edges.
 
-Verification: The LOGOS Compiler (Rust) queries the DB, checks for cycles, type safety, and permission violations.
+**Verification:** The LOGOS Compiler (Rust) queries the DB, checks for cycles, type safety, and permission violations.
 
-Compilation: If verified, the Graph is lowered to LLVM IR and emitted as a .wasm binary.
+**Compilation:** If verified, the Graph is lowered to LLVM IR and emitted as a .wasm binary.
 
-Visualization: The system renders a State Diagram (Mermaid/Graphviz) for human review.
+**Visualization:** The system renders a State Diagram (Mermaid/Graphviz) for human review.
 
-🗺️ Roadmap
-Phase 1: The Skeleton 💀
-[ ] Define strict Database Schema (SQLite).
+## 🗺️ Roadmap
 
-[ ] Build the "Visualizer": A tool to render DB Graph to Mermaid.js.
+### Phase 1: The Skeleton 💀
+- [ ] Define strict Database Schema (SQLite).
+- [ ] Build the "Visualizer": A tool to render DB Graph to Mermaid.js.
+- [ ] Develop skill.md v1.0 for ChatGPT to generate valid SQL logic.
 
-[ ] Develop skill.md v1.0 for ChatGPT to generate valid SQL logic.
+### Phase 2: The Enforcer 🛡️
+- [ ] Build Logos Runtime in Rust (Interpreter mode).
+- [ ] Implement Core Nodes (Math, String Ops).
+- [ ] End-to-end test: Prompt -> DB -> Execution.
 
-Phase 2: The Enforcer 🛡️
-[ ] Build Logos Runtime in Rust (Interpreter mode).
+### Phase 3: The Fortress 🏰
+- [ ] Integrate LLVM backend (Rust inkwell) for WASM generation.
+- [ ] Implement Cryptographic Hashing for Node Immutability.
+- [ ] Implement the "Bedrock" locking mechanism.
 
-[ ] Implement Core Nodes (Math, String Ops).
+### Phase 4: The Loop ♾️
+- [ ] Meta-Programming: Allow LOGOS Nodes to query/modify the LOGOS Database.
+- [ ] Self-Optimizing Agents: AI Architect agents that refactor the graph for efficiency.
 
-[ ] End-to-end test: Prompt -> DB -> Execution.
-
-Phase 3: The Fortress 🏰
-[ ] Integrate LLVM backend (Rust inkwell) for WASM generation.
-
-[ ] Implement Cryptographic Hashing for Node Immutability.
-
-[ ] Implement the "Bedrock" locking mechanism.
-
-Phase 4: The Loop ♾️
-[ ] Meta-Programming: Allow LOGOS Nodes to query/modify the LOGOS Database.
-
-[ ] Self-Optimizing Agents: AI Architect agents that refactor the graph for efficiency.
-
-⚖️ License
+## ⚖️ License
 GNU Affero General Public License v3.0 (AGPL-3.0)
 
 LOGOS is open-source software. However, to prevent "Cloud Capture" (where corporations modify the core to sell as a closed SaaS without contributing back), we strictly enforce AGPLv3.
 
-Network Interaction Clause: If you run a modified version of LOGOS as a network service (SaaS/Cloud), you MUST make your modified source code available to the users of that service.
+**Network Interaction Clause:** If you run a modified version of LOGOS as a network service (SaaS/Cloud), you MUST make your modified source code available to the users of that service.
 
-⚠️ Disclaimer
+## ⚠️ Disclaimer
 This is a Personal Research Project focused on High-Performance Computing and AI Architecture. It is experimental, highly complex, and follows a "Zero-Maintenance" principle. It is not intended for general-purpose scripting or UI development.
