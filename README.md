@@ -110,3 +110,6 @@ GNU Affero General Public License v3.0 (AGPL-3.0)
 LOGOS is open-source software. However, to prevent "Cloud Capture" (where corporations modify the core to sell as a closed SaaS without contributing back), we strictly enforce AGPLv3.
 
 Network Interaction Clause: If you run a modified version of LOGOS as a network service (SaaS/Cloud), you MUST make your modified source code available to the users of that service.
+
+⚠️ Disclaimer
+This is a Personal Research Project focused on High-Performance Computing and AI Architecture. It is experimental, highly complex, and follows a "Zero-Maintenance" principle. It is not intended for general-purpose scripting or UI development.
