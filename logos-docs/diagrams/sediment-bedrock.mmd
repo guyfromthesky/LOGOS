@@ -1,0 +1,16 @@
+stateDiagram-v2
+    [*] --> Sediment: AI Proposes Node
+    state Sediment {
+        [*] --> Testing
+        Testing --> Executing: Validated
+        Executing --> Testing: Iteration
+    }
+    Sediment --> Bedrock: Human Approval (Promotion)
+    Sediment --> Deprecated: Rejected
+
+    state Bedrock {
+        [*] --> Locked
+    }
+
+    Bedrock --> Deprecated: Migration Token
+    Deprecated --> [*]

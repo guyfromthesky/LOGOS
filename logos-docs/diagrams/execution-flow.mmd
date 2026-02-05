@@ -1,0 +1,14 @@
+flowchart LR
+    subgraph Old["Old Way: Python Script"]
+        O1[Mutable Script]
+        O2[Hidden Runtime State]
+        O3[Implicit Side Effects]
+        O1 --> O2 --> O3
+    end
+
+    subgraph New["LOGOS Way: Immutable Graph"]
+        N1[Immutable Nodes]
+        N2[Explicit Typed Edges]
+        N3[Ledger-backed State]
+        N1 --> N2 --> N3
+    end
